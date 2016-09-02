@@ -1,6 +1,2 @@
 # node-proxy
-玩一玩代理这玩意
-
-
-# TODO
-1. http to https
+做个node的代理服务器, 完成静态资源服务器,然后支持配置接口转发等。

@@ -10,10 +10,14 @@ const Koa = require('koa');
 const path = require('path');
 const co = require('co');
 const serve = require('koa-static');
+const favicon = require('koa-favicon');
 const app = new Koa();
 
 const args = process.argv.join('|');
 const document_root = path.resolve(/--root[=|\|](.*?)(?:\||$)/.test(args) ? RegExp.$1 : process.cwd());
+
+
+const resourceList = require('./lib/resourceList');
 
 const wrapperRequire = require('./lib/wrapperRequire');
 //const rewrite = wrapperRequire({modulePath:'./lib/rewrite', name: ''});
@@ -23,10 +27,14 @@ app.use(co.wrap(rewrite.name({
     rewrite_file: path.join(process.cwd(), './test/rewrite/server.conf.js')
 })));
 */
-console.log(document_root);
+
+app.use(favicon(__dirname + '/public/favicon.ico'));
+
 app.use(serve(document_root, {
     index: ['page/index.html', 'index.html']
 }));
+
+app.use(resourceList(document_root));
 
 app.use(ctx => {
     ctx.body = 'Hello Koa';

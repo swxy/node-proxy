@@ -9,6 +9,7 @@
     "glob": "^7.0.6",
     "http-proxy": "^1.14.0",
     "koa": "^2.0.0-alpha.5",
+    "koa-favicon": "^2.0.0",
     "koa-static": "^3.0.0",
     "minimatch": "^3.0.3",
     "thunkify": "^2.1.2"
