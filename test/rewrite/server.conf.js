@@ -1,17 +1,17 @@
 module.exports = {
     map: {
-        '/test': 'http://www.tuicool.com',
+        '/tuicool': 'http://www.tuicool.com',
         '/topics': 'http://www.tuicool.com/topics'
     },
-    regex: [
+    rules: [
         {
             match: /^\/assets\//,
             to: 'http://static0.tuicool.com/'
         },
         {
-            match: /^\/static\//,
-            to: function (path) {
-                return '/public' + path;
+            match: /^\/static\/.*/,
+            to: function (url, pathObj) {
+                return '/test/www' + pathObj.path + 'css/' + pathObj.name;
             }
         },
         {

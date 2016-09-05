@@ -1,6 +1,9 @@
 {
   "name": "node-proxy",
   "version": "0.0.1",
+  "scripts": {
+    "start": "./node_modules/.bin/node-dev app.js"
+  },
   "dependencies": {
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-register": "^6.11.6",
@@ -8,7 +11,7 @@
     "co": "^4.6.0",
     "glob": "^7.0.6",
     "http-proxy": "^1.14.0",
-    "koa": "^2.0.0-alpha.5",
+    "koa": "^2.0.0",
     "koa-favicon": "^2.0.0",
     "koa-static": "^3.0.0",
     "minimatch": "^3.0.3",

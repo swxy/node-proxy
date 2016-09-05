@@ -19,14 +19,12 @@ const document_root = path.resolve(/--root[=|\|](.*?)(?:\||$)/.test(args) ? RegE
 
 const resourceList = require('./lib/resourceList');
 
-const wrapperRequire = require('./lib/wrapperRequire');
-//const rewrite = wrapperRequire({modulePath:'./lib/rewrite', name: ''});
 
-/*
-app.use(co.wrap(rewrite.name({
+const rewrite = require('./lib/rewrite');
+
+app.use(rewrite({
     rewrite_file: path.join(process.cwd(), './test/rewrite/server.conf.js')
-})));
-*/
+}));
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
@@ -43,32 +41,3 @@ app.use(ctx => {
 app.listen(3000,'0.0.0.0', (port=3000) => {
     console.log(`Listening on http://127.0.0.1:${port}`);
 });
-
-// 在接收到关闭信号的时候，关闭所有的 socket 连接。
-(function(server) {
-    var sockets = [];
-
-    server.on('connection', function (socket) {
-        sockets.push(socket);
-
-        socket.on('close', function() {
-            var idx = sockets.indexOf(socket);
-            ~idx && sockets.splice(idx, 1);
-        });
-    });
-
-    var finalize = function() {
-        // Disconnect from cluster master
-        process.disconnect && process.disconnect();
-        process.exit(0);
-    };
-
-    // 关掉服务。
-    process.on('SIGTERM', function() {
-        console.log(' Recive quit signal in worker %s.', process.pid);
-        sockets.length ? sockets.forEach(function(socket) {
-            socket.destroy();
-            finalize();
-        }): server.close(finalize);
-    });
-})(app);
