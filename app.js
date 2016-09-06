@@ -13,17 +13,17 @@ const serve = require('koa-static');
 const favicon = require('koa-favicon');
 const app = new Koa();
 
-const args = process.argv.join('|');
+const args = process.argv.slice(2).join('|');
 const document_root = path.resolve(/--root[=|\|](.*?)(?:\||$)/.test(args) ? RegExp.$1 : process.cwd());
 
+const conf_file = path.resolve(/(\-f\||\-\-file=)(.*?)(?:\||$)/.test(args) ? RegExp.$2 : path.join(document_root, './server.conf.js'));
 
 const resourceList = require('./lib/resourceList');
 
+const proxy = require('./lib/proxy');
 
-const rewrite = require('./lib/rewrite');
-
-app.use(rewrite({
-    rewrite_file: path.join(process.cwd(), './test/rewrite/server.conf.js')
+app.use(proxy({
+    confFile: conf_file
 }));
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
