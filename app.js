@@ -38,6 +38,11 @@ app.use(ctx => {
     ctx.body = 'Hello Koa';
 });
 
-app.listen(3000,'0.0.0.0', (port=3000) => {
-    console.log(`Listening on http://127.0.0.1:${port}`);
-});
+
+module.exports = app;
+
+if (!module.parent) {
+    app.listen(3000,'0.0.0.0', (port=3000) => {
+        console.log(`Listening on http://127.0.0.1:${port}`);
+    });
+}
