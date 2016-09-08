@@ -7,6 +7,7 @@ require('babel-register')({
 });
 
 const Koa = require('koa');
+const http = require('http');
 const path = require('path');
 const co = require('co');
 const serve = require('koa-static');
@@ -39,7 +40,7 @@ app.use(ctx => {
 });
 
 
-module.exports = app;
+module.exports = http.createServer(app.callback());
 
 if (!module.parent) {
     app.listen(3000,'0.0.0.0', (port=3000) => {

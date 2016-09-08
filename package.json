@@ -2,7 +2,8 @@
   "name": "node-proxy",
   "version": "0.0.1",
   "scripts": {
-    "start": "./node_modules/.bin/node-dev app.js"
+    "start": "NODE_ENV=production node app.js --root=sample",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha test/app.test.js --root=sample"
   },
   "dependencies": {
     "babel-plugin-transform-async-to-generator": "^6.8.0",
@@ -15,5 +16,10 @@
     "koa-static": "^3.0.0",
     "minimatch": "^3.0.3",
     "thunkify": "^2.1.2"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^3.0.2",
+    "supertest": "^2.0.0"
   }
 }
