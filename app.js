@@ -11,7 +11,6 @@ const http = require('http');
 const path = require('path');
 const co = require('co');
 const serve = require('koa-static');
-const favicon = require('koa-favicon');
 const app = new Koa();
 
 const args = process.argv.slice(2).join('|');
@@ -26,8 +25,6 @@ const proxy = require('./lib/proxy');
 app.use(proxy({
     confFile: conf_file
 }));
-
-app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.use(serve(document_root, {
     index: ['page/index.html', 'index.html']
