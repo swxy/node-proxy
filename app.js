@@ -17,7 +17,7 @@ const app = new Koa();
 const args = process.argv.slice(2).join('|');
 const document_root = path.resolve(/--root[=|\|](.*?)(?:\||$)/.test(args) ? RegExp.$1 : process.cwd());
 
-const conf_file = path.resolve(/(\-f\||\-\-file=)(.*?)(?:\||$)/.test(args) ? RegExp.$2 : path.join(document_root, './server.conf.js'));
+const conf_file = path.resolve(/(\-f\||\-\-file=)(.*?)(?:\||$)/.test(args) ? RegExp.$2 : path.join(document_root, './sample/server.conf.js'));
 
 const resourceList = require('./lib/resourceList');
 const passThrough = require('./lib/passthrough');
@@ -40,7 +40,6 @@ app.use(passThrough());
 app.use(ctx => {
     ctx.body = 'Hello Koa';
 });
-
 
 module.exports = http.createServer(app.callback());
 
