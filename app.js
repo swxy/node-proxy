@@ -21,7 +21,6 @@ const conf_file = path.resolve(/(\-f\||\-\-file=)(.*?)(?:\||$)/.test(args) ? Reg
 
 const resourceList = require('./lib/resourceList');
 const passThrough = require('./lib/passthrough');
-
 const proxy = require('./lib/proxy');
 
 app.use(logger());
