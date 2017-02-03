@@ -40,10 +40,23 @@ app.use(ctx => {
     ctx.body = 'Hello Koa';
 });
 
-module.exports = http.createServer(app.callback());
+const server = http.createServer(app.callback());
+const io = require('socket.io')(server);
+io.on('connection', function(socket){
+    socket.emit('news', { hello: 'world' });
+    socket.on('event', function(data){
+        console.log(data);
+        socket.broadcast.emit('event', data);
+    });
+    socket.on('disconnect', function(){
+        console.log('disconnect');
+    });
+});
+
+module.exports = server;
 
 if (!module.parent) {
-    app.listen(4000,'0.0.0.0', (port=4000) => {
+    server.listen(4000,'0.0.0.0', (port=4000) => {
         console.log(`Listening on http://127.0.0.1:${port}`);
     });
 }
