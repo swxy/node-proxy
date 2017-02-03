@@ -41,17 +41,10 @@ app.use(ctx => {
 });
 
 const server = http.createServer(app.callback());
-const io = require('socket.io')(server);
-io.on('connection', function(socket){
-    socket.emit('news', { hello: 'world' });
-    socket.on('event', function(data){
-        console.log(data);
-        socket.broadcast.emit('event', data);
-    });
-    socket.on('disconnect', function(){
-        console.log('disconnect');
-    });
-});
+
+// 使用socket.io
+const WebSocket = require('./lib/websocket');
+WebSocket.init(server);
 
 module.exports = server;
 
