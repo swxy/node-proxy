@@ -17,7 +17,7 @@ const app = new Koa();
 const args = process.argv.slice(2).join('|');
 const document_root = path.resolve(/--root[=|\|](.*?)(?:\||$)/.test(args) ? RegExp.$1 : process.cwd());
 
-const conf_file = path.resolve(/(\-f\||\-\-file=)(.*?)(?:\||$)/.test(args) ? RegExp.$2 : path.join(document_root, './sample/server.conf.js'));
+const conf_file = path.resolve(/(\-f\||\-\-file=)(.*?)(?:\||$)/.test(args) ? RegExp.$2 : path.join(document_root, './server.conf.js'));
 
 const resourceList = require('./lib/resourceList');
 const passThrough = require('./lib/passthrough');
@@ -33,8 +33,8 @@ app.use(serve(document_root, {
     index: ['page/index.html', 'index.html']
 }));
 
-app.use(passThrough());
-//app.use(resourceList(document_root));
+// app.use(passThrough());
+app.use(resourceList(document_root));
 
 app.use(ctx => {
     ctx.body = 'Hello Koa';
@@ -43,7 +43,7 @@ app.use(ctx => {
 module.exports = http.createServer(app.callback());
 
 if (!module.parent) {
-    app.listen(3000,'0.0.0.0', (port=3000) => {
+    app.listen(4000,'0.0.0.0', (port=4000) => {
         console.log(`Listening on http://127.0.0.1:${port}`);
     });
 }
