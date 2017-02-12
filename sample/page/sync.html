@@ -5,8 +5,12 @@
     <title>Socket IO Sync</title>
 </head>
 <body>
+<div id="root">
+
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+    var $root = document.querySelector('#root');
     var socket = io('http://localhost:4000');
     socket.on('news', function (data) {
         console.log(data);
@@ -16,7 +20,7 @@
         console.log(data);
     });
     socket.on('message', function (data) {
-        console.log('message', data);
+        $root.innerHTML += '<pre>' + JSON.stringify(data, null, 4) + '</pre>';
     })
 </script>
 

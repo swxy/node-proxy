@@ -13,6 +13,10 @@ const co = require('co');
 const serve = require('koa-static');
 const logger = require('koa-logger');
 const app = new Koa();
+const server = http.createServer(app.callback());
+// 使用socket.io
+const WebSocket = require('./lib/websocket');
+WebSocket.init(server);
 
 const args = process.argv.slice(2).join('|');
 const document_root = path.resolve(/--root[=|\|](.*?)(?:\||$)/.test(args) ? RegExp.$1 : process.cwd());
@@ -39,12 +43,6 @@ app.use(resourceList(document_root));
 app.use(ctx => {
     ctx.body = 'Hello Koa';
 });
-
-const server = http.createServer(app.callback());
-
-// 使用socket.io
-const WebSocket = require('./lib/websocket');
-WebSocket.init(server);
 
 module.exports = server;
 

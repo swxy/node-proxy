@@ -1,0 +1,12 @@
+.container {
+    background: #48ff52;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+
+.container:after {
+    content: 'A';
+    display: block;
+    font-size: 20px;
+}
